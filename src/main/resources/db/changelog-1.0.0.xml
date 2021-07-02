@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create_box_break" author="do">
+        <createTable tableName="box_break">
+            <column name="id" type="serial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="author" type="varchar(50)"/>
+            <column name="date" type="timestamptz"/>
+            <column name="active" type="boolean" defaultValue="false"/>
+        </createTable>
+
+        <createTable tableName="box_break_teams">
+            <column name="box_break_id" type="serial">
+                <constraints foreignKeyName="fk_box_break_id"
+                             referencedTableName="box_break"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="team" type="varchar(50)"/>
+        </createTable>
+
+        <createTable tableName="box_break_order">
+            <column name="box_break_id" type="serial">
+                <constraints foreignKeyName="fk_box_break_id"
+                             referencedTableName="box_break"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="name" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="user_box_break" author="do">
+        <createTable tableName="user_box_break">
+            <column name="id" type="serial">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="box_break_id" type="serial">
+                <constraints foreignKeyName="fk_box_break_id"
+                             referencedTableName="box_break"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_box_break_teams">
+            <column name="user_box_break_id" type="serial">
+                <constraints foreignKeyName="fk_user_box_break_id"
+                             referencedTableName="user_box_break"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="team" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
