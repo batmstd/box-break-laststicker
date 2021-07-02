@@ -1,14 +1,12 @@
 import React from 'react';
 import {activeDrafts, addUserToDraft, draft} from "../api";
-import {DndProvider, useDrag, useDrop} from "react-dnd";
-import {HTML5Backend} from 'react-dnd-html5-backend'
-import update from 'immutability-helper';
+import {SortableContainer, SortableElement} from 'react-sortable-hoc';
+import arrayMove from 'array-move';
 
 export const UserForm = () => {
     const [breaks, setBreaks] = React.useState([]);
     const [selectedBreak, selectBreak] = React.useState(undefined);
     const [name, setName] = React.useState('-');
-    const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
         activeDrafts().then(res => setBreaks(res.data))
@@ -17,7 +15,6 @@ export const UserForm = () => {
     const handleSelect = ({target}) => {
         draft(target.value).then(res => {
             selectBreak(res.data);
-            setCards(res.data.teams.map((team, i) => ({id: i, text: team})));
         })
     }
 
@@ -27,20 +24,12 @@ export const UserForm = () => {
         if (name === '-') {
             return alert("выберите ваш ник")
         }
-        addUserToDraft(name, selectedBreak.id, cards.map(card => card.text)).then(() => window.location.reload())
+        addUserToDraft(name, selectedBreak.id, selectedBreak.teams).then(() => window.location.reload())
     }
 
-    const moveCard = React.useCallback((dragIndex, hoverIndex) => {
-        const dragCard = cards[dragIndex];
-        const newCards = update(cards, {
-            $splice: [
-                [dragIndex, 1],
-                [hoverIndex, 0, dragCard],
-            ],
-        });
-        setCards(newCards);
-
-    }, [cards]);
+    const onSortEnd = ({oldIndex, newIndex}) => {
+        selectBreak(b => ({...b, teams: arrayMove(b.teams, oldIndex, newIndex)}))
+    };
 
     return (<div className={'drafts'}>
         <label>Выберите Брейк:</label>
@@ -66,17 +55,10 @@ export const UserForm = () => {
             </div>
             <br/>
             <label>Выберите команды по приоритету</label>
-            <DndProvider backend={HTML5Backend}>
-                <div style={style}>{cards.map((card, index) => (
-                    <Card key={card.id} index={index} id={card.id} text={card.text} moveCard={moveCard}/>))}
-                </div>
-            </DndProvider>
+            <SortableList items={selectedBreak.teams} onSortEnd={onSortEnd} />
         </div>)}
     </div>)
 }
-const style = {
-    width: 400,
-};
 
 const styleC = {
     border: '1px dashed gray',
@@ -85,65 +67,15 @@ const styleC = {
     backgroundColor: 'white',
     cursor: 'move',
 };
-export const Card = ({id, text, index, moveCard}) => {
-    const ref = React.useRef(null);
-    const [{handlerId}, drop] = useDrop({
-        accept: 'CARD',
-        collect(monitor) {
-            return {
-                handlerId: monitor.getHandlerId(),
-            };
-        },
-        hover(item, monitor) {
-            if (!ref.current) {
-                return;
-            }
-            const dragIndex = item.index;
-            const hoverIndex = index;
-            // Don't replace items with themselves
-            if (dragIndex === hoverIndex) {
-                return;
-            }
-            // Determine rectangle on screen
-            const hoverBoundingRect = ref.current?.getBoundingClientRect();
-            // Get vertical middle
-            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            // Determine mouse position
-            const clientOffset = monitor.getClientOffset();
-            // Get pixels to the top
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-            // Only perform the move when the mouse has crossed half of the items height
-            // When dragging downwards, only move when the cursor is below 50%
-            // When dragging upwards, only move when the cursor is above 50%
-            // Dragging downwards
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return;
-            }
-            // Dragging upwards
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return;
-            }
-            // Time to actually perform the action
-            moveCard(dragIndex, hoverIndex);
-            // Note: we're mutating the monitor item here!
-            // Generally it's better to avoid mutations,
-            // but it's good here for the sake of performance
-            // to avoid expensive index searches.
-            item.index = hoverIndex;
-        },
-    });
-    const [{isDragging}, drag] = useDrag({
-        type: 'CARD',
-        item: () => {
-            return {id, index};
-        },
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
-        }),
-    });
-    const opacity = isDragging ? 0 : 1;
-    drag(drop(ref));
-    return (<div ref={ref} style={{...styleC, opacity}} data-handler-id={handlerId}>
-        {text}
-    </div>);
-};
+
+const SortableItem = SortableElement(({value}) => <div style={styleC}>{value}</div>);
+
+const SortableList = SortableContainer(({items}) => {
+    return (
+        <div>
+            {items.map((value, index) => (
+                <SortableItem key={`item-${value}`} index={index} value={value} />
+            ))}
+        </div>
+    );
+});
