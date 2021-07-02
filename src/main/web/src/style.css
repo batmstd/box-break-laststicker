@@ -30,6 +30,20 @@
     grid-template-columns: repeat(3, 1fr);
 }
 
+.team {
+    border: 1px dashed gray;
+    padding: 0.5rem 1rem;
+    margin-bottom: .5rem;
+    background-color: white;
+    cursor: move;
+}
+
+.wrapped-team {
+    display: grid;
+    grid-template-columns: 25px 1fr;
+    align-items: center;
+}
+
 @media screen and (max-width: 800px) {
     .main {
         grid-template-rows: repeat(3, max-content);

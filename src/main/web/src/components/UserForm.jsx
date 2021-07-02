@@ -60,22 +60,16 @@ export const UserForm = () => {
     </div>)
 }
 
-const styleC = {
-    border: '1px dashed gray',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
-    backgroundColor: 'white',
-    cursor: 'move',
-};
-
-const SortableItem = SortableElement(({value}) => <div style={styleC}>{value}</div>);
+const SortableItem = SortableElement(({value, i}) => <div className={"wrapped-team"}>
+    <div>{i}.</div>
+    <div className={"team"}>{value}</div>
+</div>);
 
 const SortableList = SortableContainer(({items}) => {
     return (
         <div>
             {items.map((value, index) => (
-                <SortableItem key={`item-${value}`} index={index} value={value} />
-            ))}
+                <SortableItem key={`item-${value}`} index={index} value={value} i={index + 1} />))}
         </div>
     );
 });
