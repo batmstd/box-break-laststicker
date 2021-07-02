@@ -65,7 +65,7 @@ export const DraftInfo = ({match: {params: {id}}}) => {
                 <label>Приоритет команд:</label>
                 <div className={"users"}>
                     {draftInfo.usersWithTeams.map((user, i) => (
-                        <UserInfo key={i} name={user.name} teams={user.teams} callback={enterTeamsCallback}/>
+                        <UserInfo key={i} name={user.name} teams={user.teams} callback={enterTeamsCallback} allTeams={draftInfo.teams}/>
                     ))}
                 </div>
             </div>
