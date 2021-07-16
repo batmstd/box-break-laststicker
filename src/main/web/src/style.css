@@ -36,6 +36,9 @@
     margin-bottom: .5rem;
     background-color: white;
     cursor: move;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    align-items: center;
 }
 
 .wrapped-team {
