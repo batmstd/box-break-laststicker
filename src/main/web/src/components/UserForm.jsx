@@ -2,6 +2,7 @@ import React from 'react';
 import {activeDrafts, addUserToDraft, draft} from "../api";
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import arrayMove from 'array-move';
+import {NavLink} from "react-router-dom";
 
 export const UserForm = () => {
     const [breaks, setBreaks] = React.useState([]);
@@ -41,6 +42,9 @@ export const UserForm = () => {
         </select>
         <br/>
         {selectedBreak && (<div>
+            <div>
+                <NavLink to={"/info/" + selectedBreak.id}>Посмотреть текущее состояние драфта</NavLink>
+            </div>
             <div>
                 <button onClick={save}>Сохранить</button>
             </div>
