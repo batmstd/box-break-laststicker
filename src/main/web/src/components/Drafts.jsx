@@ -1,15 +1,17 @@
 import React from 'react';
-import {NavLink} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import {activeDrafts} from "../api";
+import Button from "@mui/material/Button";
 
 export const Drafts = () => {
+    const history = useHistory();
     const [breaks, setBreaks] = React.useState([]);
     React.useEffect(() => {
         activeDrafts().then(res => setBreaks(res.data))
     }, [])
     return (
         <div className={'drafts'}>
-            <NavLink to={"/draft/new"}>Создать новый</NavLink>
+            <Button variant="contained" onClick={() => history.push("/draft/new")}>Создать новый</Button>
             <br/>
             <br/>
             {breaks.length > 0 && <table border={1}>

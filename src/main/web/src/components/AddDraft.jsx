@@ -3,14 +3,46 @@ import {InsertDraft} from "./InsertDraft";
 import {InsertTeams} from "./InsertTeams";
 import {withRouter} from "react-router";
 import {addDraft} from "../api";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import StepLabel from "@mui/material/StepLabel";
+import Typography from "@mui/material/Typography";
+import Stepper from "@mui/material/Stepper";
+import StepContent from "@mui/material/StepContent";
+import Paper from "@mui/material/Paper";
+import Step from "@mui/material/Step";
+import TextField from "@mui/material/TextField";
 
 export const AddDraft = withRouter(({history}) => {
-    const [step, setStep] = React.useState(0);
     const [author, setAuthor] = React.useState('');
     const [name, setName] = React.useState('');
     const [list, setList] = React.useState([]);
+    const [teams, setTeams] = React.useState([]);
+    const [activeStep, setActiveStep] = React.useState(0);
+    const [skipped, setSkipped] = React.useState(new Set());
 
-    const incrementStep = () => setStep(prev => prev + 1);
+    const isStepSkipped = (step) => {
+        return skipped.has(step);
+    };
+
+    const handleNext = () => {
+        let newSkipped = skipped;
+        if (isStepSkipped(activeStep)) {
+            newSkipped = new Set(newSkipped.values());
+            newSkipped.delete(activeStep);
+        }
+
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setSkipped(newSkipped);
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
+    const handleReset = () => {
+        setActiveStep(0);
+    };
 
     const handleChangeAuthor = ({target: {value}}) => setAuthor(value);
 
@@ -18,46 +50,76 @@ export const AddDraft = withRouter(({history}) => {
 
     const orderDraftCallback = (data) => {
         setList(data);
-        incrementStep();
     }
 
-    const save = (teams) => {
+    const save = () => {
         addDraft(name, author, teams, list).then(() => history.push("/draft"))
     }
-
-    return (<div>
-
-            <Step current={step} need={0}>
-                <div className={"fields"}>
-                    <label>Автор:</label>
-                    <input value={author} onChange={handleChangeAuthor}/>
-                    <button onClick={incrementStep}>Далее</button>
-                </div>
-            </Step>
-
-            <Step current={step} need={1}>
-                <div className={"fields"}>
-                    <label>Название:</label>
-                    <input value={name} onChange={handleChangeName}/>
-                    <button onClick={incrementStep}>Далее</button>
-                </div>
-            </Step>
-
-            <Step current={step} need={2}>
+    const steps = [
+        {
+            label: "Выбор организатора",
+            body: <div>
+                <TextField id="outlined-basic" label="Автор" variant="outlined" value={author} onChange={handleChangeAuthor}/>
+            </div>
+        },
+        {
+            label: "Название",
+            body: <div>
+                <TextField id="outlined-basic" label="Название" variant="outlined" value={name} onChange={handleChangeName}/>
+            </div>
+        },
+        {
+            label: "Участники",
+            body: <div>
                 <InsertDraft callback={orderDraftCallback}/>
-            </Step>
+            </div>
+        },
+        {
+            label: "Команды",
+            body: <div>
+                <InsertTeams callback={t => setTeams(t)}/>
+            </div>
+        }
+    ];
 
-            <Step current={step} need={3}>
-                <InsertTeams callback={t => save(t)}/>
-            </Step>
-        </div>
-    )
+    return (<Box sx={{maxWidth: 400}}>
+        <Stepper activeStep={activeStep} orientation="vertical">
+            {steps.map((step, index) => (
+                <Step key={step.label}>
+                    <StepLabel>
+                        {step.label}
+                    </StepLabel>
+                    <StepContent>
+                        {step.body}
+                        <Box sx={{mb: 2}}>
+                            <div>
+                                <Button
+                                    variant="contained"
+                                    onClick={index === steps.length - 1 ? save : handleNext}
+                                    sx={{mt: 1, mr: 1}}
+                                >
+                                    {index === steps.length - 1 ? 'Создать' : 'Далее'}
+                                </Button>
+                                <Button
+                                    disabled={index === 0}
+                                    onClick={handleBack}
+                                    sx={{mt: 1, mr: 1}}
+                                >
+                                    Назад
+                                </Button>
+                            </div>
+                        </Box>
+                    </StepContent>
+                </Step>
+            ))}
+        </Stepper>
+        {activeStep === steps.length && (
+            <Paper square elevation={0} sx={{p: 3}}>
+                <Typography>All steps completed - you&apos;re finished</Typography>
+                <Button onClick={handleReset} sx={{mt: 1, mr: 1}}>
+                    Сбросить
+                </Button>
+            </Paper>
+        )}
+    </Box>)
 })
-
-const Step = ({current, need, children}) => {
-    if (current !== need) {
-        return <></>;
-    }
-
-    return children;
-}
