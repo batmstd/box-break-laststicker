@@ -57,4 +57,10 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="add_type_for_box_break" author="do">
+        <addColumn tableName="box_break">
+            <column name="type" type="varchar(16)" defaultValue="Other"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

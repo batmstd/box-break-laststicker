@@ -4,21 +4,19 @@ import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import arrayMove from 'array-move';
 import {NavLink} from "react-router-dom";
 import * as NBAIcons from 'react-nba-logos';
+import {Breaks} from "./Drafts";
+import {useParams} from "react-router";
 
 export const UserForm = () => {
-    const [breaks, setBreaks] = React.useState([]);
     const [selectedBreak, selectBreak] = React.useState(undefined);
     const [name, setName] = React.useState('-');
+    const params = useParams();
 
     React.useEffect(() => {
-        activeDrafts().then(res => setBreaks(res.data))
-    }, []);
-
-    const handleSelect = ({target}) => {
-        draft(target.value).then(res => {
+        draft(params.id).then(res => {
             selectBreak(res.data);
         })
-    }
+    }, [params.id]);
 
     const handleChangeName = ({target: {value}}) => setName(value);
 
@@ -34,14 +32,6 @@ export const UserForm = () => {
     };
 
     return (<div className={'drafts'}>
-        <label>Выберите Брейк:</label>
-        <select onChange={handleSelect}>
-            <option value={-1}>-</option>
-            {breaks.map(b => (
-                <option key={b.id} value={b.id}>{b.author} - {b.name}</option>
-            ))}
-        </select>
-        <br/>
         {selectedBreak && (<div>
             <div>
                 <NavLink to={"/info/" + selectedBreak.id}>Посмотреть текущее состояние драфта</NavLink>
@@ -62,6 +52,17 @@ export const UserForm = () => {
             <label>Выберите команды по приоритету</label>
             <SortableList items={selectedBreak.teams} onSortEnd={onSortEnd} />
         </div>)}
+    </div>)
+}
+
+export const ViewUserBreaks = () => {
+    const [breaks, setBreaks] = React.useState([]);
+
+    React.useEffect(() => {
+        activeDrafts().then(res => setBreaks(res.data))
+    }, []);
+    return (<div>
+        {breaks.map((b, i) => <Breaks key={i} group={b} url={"/draft/view/"}/>)}
     </div>)
 }
 

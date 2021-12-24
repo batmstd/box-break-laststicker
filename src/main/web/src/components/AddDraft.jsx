@@ -1,7 +1,7 @@
 import React from 'react';
 import {InsertDraft} from "./InsertDraft";
 import {InsertTeams} from "./InsertTeams";
-import {withRouter} from "react-router";
+import {useHistory, withRouter} from "react-router";
 import {addDraft} from "../api";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -12,11 +12,13 @@ import StepContent from "@mui/material/StepContent";
 import Paper from "@mui/material/Paper";
 import Step from "@mui/material/Step";
 import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
 
 export const AddDraft = withRouter(({history}) => {
     const [author, setAuthor] = React.useState('');
     const [name, setName] = React.useState('');
     const [list, setList] = React.useState([]);
+    const [league, setLeague] = React.useState("NBA");
     const [teams, setTeams] = React.useState([]);
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
@@ -52,37 +54,51 @@ export const AddDraft = withRouter(({history}) => {
         setList(data);
     }
 
+    const handleChangeLeague = (event) => {
+        setLeague(event.target.value);
+    };
+
     const save = () => {
         addDraft(name, author, teams, list).then(() => history.push("/draft"))
     }
     const steps = [
         {
             label: "Выбор организатора",
-            body: <div>
-                <TextField id="outlined-basic" label="Автор" variant="outlined" value={author} onChange={handleChangeAuthor}/>
-            </div>
+            body: <TextField id="outlined-basic" label="Автор" variant="outlined" value={author} onChange={handleChangeAuthor}/>
         },
         {
             label: "Название",
-            body: <div>
-                <TextField id="outlined-basic" label="Название" variant="outlined" value={name} onChange={handleChangeName}/>
-            </div>
+            body: <TextField id="outlined-basic" label="Название" variant="outlined" value={name} onChange={handleChangeName}/>
         },
         {
             label: "Участники",
-            body: <div>
-                <InsertDraft callback={orderDraftCallback}/>
-            </div>
+            body: <InsertDraft callback={orderDraftCallback}/>
+        },
+        {
+            label: "Выбор лиги",
+            body:  <TextField
+                id="select-league"
+                select
+                label="Выбор лиги"
+                value={league}
+                onChange={handleChangeLeague}
+                helperText="Выберите лигу"
+            >
+                {["NBA", "NFL", "APL", "La Liga", "Other"].map((option) => (
+                    <MenuItem key={option} value={option}>
+                        {option}
+                    </MenuItem>
+                ))}
+            </TextField>
         },
         {
             label: "Команды",
-            body: <div>
-                <InsertTeams callback={t => setTeams(t)}/>
-            </div>
+            body: <InsertTeams league={league} callback={t => setTeams(t)}/>
         }
     ];
 
-    return (<Box sx={{maxWidth: 400}}>
+    return (<Box>
+        <Button variant="outlined" onClick={() => history.push("/draft/")}>Отмена</Button>
         <Stepper activeStep={activeStep} orientation="vertical">
             {steps.map((step, index) => (
                 <Step key={step.label}>

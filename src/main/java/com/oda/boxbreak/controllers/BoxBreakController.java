@@ -1,5 +1,6 @@
 package com.oda.boxbreak.controllers;
 
+import com.oda.boxbreak.dto.ActiveBoxBreaksDto;
 import com.oda.boxbreak.dto.BoxBreakDto;
 import com.oda.boxbreak.dto.BoxBreakExtDto;
 import com.oda.boxbreak.requests.BoxBreakAddRequest;
@@ -27,7 +28,7 @@ public class BoxBreakController {
     }
 
     @GetMapping(path = "/actives")
-    public List<BoxBreakDto> actives() {
+    public List<ActiveBoxBreaksDto> actives() {
         return boxBreak.getActives();
     }
 

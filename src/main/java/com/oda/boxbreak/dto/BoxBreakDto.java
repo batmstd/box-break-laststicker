@@ -13,4 +13,5 @@ public class BoxBreakDto {
     Long id;
     String author;
     String name;
+    String type;
 }

@@ -1,5 +1,6 @@
 package com.oda.boxbreak.services;
 
+import com.oda.boxbreak.dto.ActiveBoxBreaksDto;
 import com.oda.boxbreak.dto.BoxBreakDto;
 import com.oda.boxbreak.dto.BoxBreakExtDto;
 import com.oda.boxbreak.dto.UserWithTeamsDto;
@@ -11,8 +12,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +32,14 @@ public class BoxBreakService implements BoxBreak {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BoxBreakDto> getActives() {
+    public List<ActiveBoxBreaksDto> getActives() {
         return repository.findAllByActiveTrue()
                 .stream()
                 .map(this::map)
+                .collect(Collectors.groupingBy(BoxBreakDto::getType))
+                .entrySet()
+                .stream()
+                .map(entry -> ActiveBoxBreaksDto.of(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
     }
 
@@ -55,7 +58,7 @@ public class BoxBreakService implements BoxBreak {
     }
 
     private BoxBreakDto map(BoxBreakEntity e) {
-        return new BoxBreakDto(e.getId(), e.getAuthor(), e.getName());
+        return new BoxBreakDto(e.getId(), e.getAuthor(), e.getName(), e.getType());
     }
 
     private BoxBreakExtDto mapExt(BoxBreakEntity e) {

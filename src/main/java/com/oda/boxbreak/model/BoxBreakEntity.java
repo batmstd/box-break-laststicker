@@ -37,6 +37,9 @@ public class BoxBreakEntity {
     @Column(name = "date")
     Instant date;
 
+    @Column(name = "type")
+    String type;
+
     @Column(name = "active")
     boolean active;
 
