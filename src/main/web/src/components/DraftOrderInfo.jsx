@@ -2,6 +2,13 @@ import React from 'react';
 import {withRouter} from "react-router";
 import {draft} from "../api";
 import {OrderedList} from "./OrderedList";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import TextField from '@mui/material/TextField';
+import Button from "@mui/material/Button";
 
 export const DraftOrderInfo = withRouter(({match: {params: {id}}, history: {goBack}}) => {
     const [draftInfo, setDraftInfo] = React.useState({order: [], usersWithTeams: [], teams: []});
@@ -46,15 +53,32 @@ export const DraftOrderInfo = withRouter(({match: {params: {id}}, history: {goBa
                 <div>Автор: {draftInfo.author}</div>
                 <div>Название: {draftInfo.name}</div>
             </div>
-            <hr/>
-            <OrderedList list={draftInfo.order} selectedIndex={selectedIndex}/>
-            <hr/>
-            <label>Выбранные команды:</label>
-            <div>
-                {resultList.map((result, i) => (
-                    <div key={i}>{i + 1}. <b>{result.team}</b> - {result.user}</div>
-                ))}
-            </div>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                >
+                    <Typography>Очередь драфта</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <OrderedList list={draftInfo.order} selectedIndex={selectedIndex}/>
+                </AccordionDetails>
+            </Accordion>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                >
+                    <Typography>Выбранные команды:</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    {resultList.map((result, i) => (
+                        <div key={i}>{i + 1}. <b>{result.team}</b> - {result.user}</div>
+                    ))}
+                </AccordionDetails>
+            </Accordion>
         </div>
     </div>)
 });

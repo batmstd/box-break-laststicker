@@ -2,15 +2,22 @@ import React from 'react';
 import {activeDrafts, addUserToDraft, draft} from "../api";
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import arrayMove from 'array-move';
-import {NavLink} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import * as NBAIcons from 'react-nba-logos';
 import {Breaks} from "./Drafts";
 import {useParams} from "react-router";
+import Button from "@mui/material/Button";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
 
 export const UserForm = () => {
     const [selectedBreak, selectBreak] = React.useState(undefined);
     const [name, setName] = React.useState('-');
     const params = useParams();
+    const history = useHistory();
 
     React.useEffect(() => {
         draft(params.id).then(res => {
@@ -34,19 +41,28 @@ export const UserForm = () => {
     return (<div className={'drafts'}>
         {selectedBreak && (<div>
             <div>
-                <NavLink to={"/info/" + selectedBreak.id}>Посмотреть текущее состояние драфта</NavLink>
+                <Button onClick={() => history.push("/info/" + selectedBreak.id)}>Посмотреть текущее состояние драфта</Button>
             </div>
             <div>
-                <button onClick={save}>Сохранить</button>
+                <Button variant={"contained"} onClick={save}>Сохранить</Button>
             </div>
-            <div>
-                <label>Ваш ник на laststicker:</label>
-                <select onChange={handleChangeName}>
-                    <option value={'-'}>-</option>
-                    {selectedBreak.usersWithTeams.filter(u => u.teams.length === 0).map(b => (
-                        <option key={b.name} value={b.name}>{b.name}</option>
-                    ))}
-                </select>
+            <div style={{marginTop: 10}}>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="demo-simple-select-helper-label">Ваш ник на laststicker</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        value={name}
+                        label="Ваш ник на laststicker"
+                        onChange={handleChangeName}
+                    >
+                        <MenuItem value={'-'}>-</MenuItem>
+                        {selectedBreak.usersWithTeams.filter(u => u.teams.length === 0).map(b => (
+                            <MenuItem key={b.name} value={b.name}>{b.name}</MenuItem>
+                        ))}
+                    </Select>
+                    <FormHelperText>Ваш ник на laststicker</FormHelperText>
+                </FormControl>
             </div>
             <br/>
             <label>Выберите команды по приоритету</label>

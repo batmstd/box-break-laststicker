@@ -2,12 +2,15 @@ import React from 'react';
 import {deactivate, draft, updateUserDraft} from "../api";
 import {OrderedList} from "./OrderedList";
 import {UserInfo} from "./UserInfo";
+import Button from "@mui/material/Button";
+import Stack from '@mui/material/Stack';
+import {useHistory} from "react-router";
 
 export const DraftInfo = ({match: {params: {id}}}) => {
     const [draftInfo, setDraftInfo] = React.useState({order: [], usersWithTeams: [], teams: []});
     const [resultList, setResultList] = React.useState([]);
     const [selectedIndex, setSelectedIndex] = React.useState(0);
-
+    const history = useHistory();
 
     React.useEffect(() => {
         draft(id).then(res => setDraftInfo(res.data));
@@ -54,9 +57,10 @@ export const DraftInfo = ({match: {params: {id}}}) => {
         <div>
             <div>Автор: {draftInfo.author}</div>
             <div>Название: {draftInfo.name}</div>
-            <div>
-                <button onClick={handleDeactivate}>Завершить</button>
-            </div>
+            <Stack spacing={2} direction="row">
+                <Button variant={"contained"} onClick={handleDeactivate}>Завершить</Button>
+                <Button variant={"outlined"} onClick={() => history.push("/draft/")}>Назад</Button>
+            </Stack>
         </div>
         <hr/>
         <div className={'main'}>
