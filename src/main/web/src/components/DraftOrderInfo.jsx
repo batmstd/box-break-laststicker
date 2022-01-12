@@ -11,7 +11,13 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 export const DraftOrderInfo = withRouter(({match: {params: {id}}, history: {goBack}}) => {
     const [draftInfo, setDraftInfo] = React.useState({order: [], usersWithTeams: [], teams: []});
     const [resultList, setResultList] = React.useState([]);
+    const [picks, setPicks] = React.useState([]);
     const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const [expanded, setExpanded] = React.useState('panel3');
+
+    const handleChange = (panel) => (event, newExpanded) => {
+        setExpanded(newExpanded ? panel : false);
+    };
 
     React.useEffect(() => {
         draft(id).then(res => setDraftInfo(res.data));
@@ -40,6 +46,7 @@ export const DraftOrderInfo = withRouter(({match: {params: {id}}, history: {goBa
             return ut ? {team, user: ut.user} : {team, user: null}
         })
         setResultList(r);
+        setPicks(res);
     }, [draftInfo]);
 
 
@@ -51,7 +58,7 @@ export const DraftOrderInfo = withRouter(({match: {params: {id}}, history: {goBa
                 <div>Автор: {draftInfo.author}</div>
                 <div>Название: {draftInfo.name}</div>
             </div>
-            <Accordion>
+            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -63,17 +70,31 @@ export const DraftOrderInfo = withRouter(({match: {params: {id}}, history: {goBa
                     <OrderedList list={draftInfo.order} selectedIndex={selectedIndex}/>
                 </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
-                    <Typography>Выбранные команды:</Typography>
+                    <Typography>Выбранные команды</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     {resultList.map((result, i) => (
                         <div key={i}>{i + 1}. <b>{result.team}</b> - {result.user}</div>
+                    ))}
+                </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                >
+                    <Typography>Выбранные команды (по порядку)</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    {picks.map((pick, i) => (
+                        <div key={i}>{i + 1}. <b>{pick.team}</b> ({pick.user})</div>
                     ))}
                 </AccordionDetails>
             </Accordion>
