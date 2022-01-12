@@ -78,6 +78,7 @@ public class BoxBreakService implements BoxBreak {
                 .collect(Collectors.toList());
         dto.setUsersWithTeams(users);
         dto.setTeams(e.getTeams());
+        dto.setType(e.getType());
         return dto;
     }
 }
