@@ -7,8 +7,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import TextField from '@mui/material/TextField';
-import Button from "@mui/material/Button";
 
 export const DraftOrderInfo = withRouter(({match: {params: {id}}, history: {goBack}}) => {
     const [draftInfo, setDraftInfo] = React.useState({order: [], usersWithTeams: [], teams: []});

@@ -11,7 +11,7 @@ const getCommandsByLeague = (league) => {
         case 'La Liga':
             return 'Alavés\nAthletic Bilbao\nAtlético Madrid\nBarcelona\nCádiz\nCelta\nElche\nEspanyol\nGetafe\nGranada\nLevante\nMallorca\nOsasuna\nRayo Vallecano\nReal Betis\nReal Madrid\nReal Sociedad\nSevilla\nValencia\nVillarreal';
         case 'NFL':
-            return 'Arizona\nAtlanta\nBaltimore\nBuffalo\nCarolina\nChicago\nCincinnati\nCleveland\nDallas\nDenver\nDetroit\nGreen Bay\nHouston\nIndianapolis\nJacksonville\nKansas City\nLA Chargers\nLA Rams\nLas Vegas\nMiami\nMinnesota\nNew England\nNew Orleans\nNY Giants\nNY Jets\nPhiladelphia\nPittsburgh\nSan Francisco\nSeattle\nTampa Bay\nTennessee\nWashington\n';
+            return 'Arizona\nAtlanta\nBaltimore\nBuffalo\nCarolina\nChicago\nCincinnati\nCleveland\nDallas\nDenver\nDetroit\nGreen Bay\nHouston\nIndianapolis\nJacksonville\nKansas City\nLA Chargers\nLA Rams\nLas Vegas\nMiami\nMinnesota\nNew England\nNew Orleans\nNY Giants\nNY Jets\nPhiladelphia\nPittsburgh\nSan Francisco\nSeattle\nTampa Bay\nTennessee\nWashington';
         default:
             return '';
     }
@@ -21,7 +21,7 @@ export const InsertTeams = ({callback, league}) => {
     const [value, setValue] = React.useState('');
 
     React.useEffect(() => {
-        const list = value.split("\n")
+        const list = getCommandsByLeague(league).split("\n")
         callback(list);
     }, []);
 

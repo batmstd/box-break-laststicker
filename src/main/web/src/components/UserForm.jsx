@@ -2,8 +2,9 @@ import React from 'react';
 import {activeDrafts, addUserToDraft, draft} from "../api";
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import arrayMove from 'array-move';
-import {NavLink, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import * as NBAIcons from 'react-nba-logos';
+import * as NFLIcons from 'react-nfl-logos';
 import {Breaks} from "./Drafts";
 import {useParams} from "react-router";
 import Button from "@mui/material/Button";
@@ -18,7 +19,6 @@ export const UserForm = () => {
     const [name, setName] = React.useState('-');
     const params = useParams();
     const history = useHistory();
-
     React.useEffect(() => {
         draft(params.id).then(res => {
             selectBreak(res.data);
@@ -41,13 +41,14 @@ export const UserForm = () => {
     return (<div className={'drafts'}>
         {selectedBreak && (<div>
             <div>
-                <Button onClick={() => history.push("/info/" + selectedBreak.id)}>Посмотреть текущее состояние драфта</Button>
+                <Button onClick={() => history.push("/info/" + selectedBreak.id)}>Посмотреть текущее состояние
+                    драфта</Button>
             </div>
             <div>
                 <Button variant={"contained"} onClick={save}>Сохранить</Button>
             </div>
             <div style={{marginTop: 10}}>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <FormControl sx={{m: 1, minWidth: 120}}>
                     <InputLabel id="demo-simple-select-helper-label">Ваш ник на laststicker</InputLabel>
                     <Select
                         labelId="demo-simple-select-helper-label"
@@ -66,7 +67,7 @@ export const UserForm = () => {
             </div>
             <br/>
             <label>Выберите команды по приоритету</label>
-            <SortableList items={selectedBreak.teams} onSortEnd={onSortEnd} />
+            <SortableList items={selectedBreak.teams} type={selectedBreak.type} onSortEnd={onSortEnd}/>
         </div>)}
     </div>)
 }
@@ -82,15 +83,99 @@ export const ViewUserBreaks = () => {
     </div>)
 }
 
-const SortableItem = SortableElement(({value, i}) => <div className={"wrapped-team"}>
+const SortableItem = SortableElement(({value, type, i}) => <div className={"wrapped-team"}>
     <div>{i}.</div>
     <div className={"team"}>
-        <Logo team={value}/>
+        <Logo team={value} type={type}/>
         <div>{value}</div>
     </div>
 </div>);
 
-const Logo = ({team}) => {
+const Logo = ({team, type}) => {
+    switch (type) {
+        case 'NBA':
+            return <NBALogo team={team}/>
+        case 'NFL':
+            return <NFLLogo team={team}/>
+        default:
+            return <div/>
+    }
+}
+
+const NFLLogo = ({team}) => {
+    switch (team) {
+        case "Jacksonville":
+            return <NFLIcons.JAX size={40}/>
+        case "San Francisco":
+            return <NFLIcons.SF size={40}/>
+        case "NY Giants":
+            return <NFLIcons.NYG size={40}/>
+        case "Seattle":
+            return <NFLIcons.SEA size={40}/>
+        case "New Orleans":
+            return <NFLIcons.NO size={40}/>
+        case "Houston":
+            return <NFLIcons.HOU size={40}/>
+        case "Kansas City":
+            return <NFLIcons.KC size={40}/>
+        case "Chicago":
+            return <NFLIcons.CHI size={40}/>
+        case "Minnesota":
+            return <NFLIcons.MIN size={40}/>
+        case "Miami":
+            return <NFLIcons.MIA size={40}/>
+        case "Cleveland":
+            return <NFLIcons.CLE size={40}/>
+        case "Atlanta":
+            return <NFLIcons.ATL size={40}/>
+        case "LA Chargers":
+            return <NFLIcons.LAC size={40}/>
+        case "Arizona":
+            console.log('arizona')
+            return <NFLIcons.ARI size={40}/>
+        case "Cincinnati":
+            return <NFLIcons.CIN size={40}/>
+        case "Dallas":
+            return <NFLIcons.DAL size={40}/>
+        case "Detroit":
+            return <NFLIcons.DET size={40}/>
+        case "Buffalo":
+            return <NFLIcons.BUF size={40}/>
+        case "Pittsburgh":
+            return <NFLIcons.PIT size={40}/>
+        case "Philadelphia":
+            return <NFLIcons.PHI size={40}/>
+        case "Baltimore":
+            return <NFLIcons.BAL size={40}/>
+        case "Washington":
+            return <NFLIcons.WAS size={40}/>
+        case "Las Vegas":
+            return <NFLIcons.LV size={40}/>
+        case "Tampa Bay":
+            return <NFLIcons.TB size={40}/>
+        case "NY Jets":
+            return <NFLIcons.NYJ size={40}/>
+        case "New England":
+            return <NFLIcons.NE size={40}/>
+        case "Green Bay":
+            return <NFLIcons.GB size={40}/>
+        case "Carolina":
+            return <NFLIcons.CAR size={40}/>
+        case "Tennessee":
+            return <NFLIcons.TEN size={40}/>
+        case "Indianapolis":
+            return <NFLIcons.IND size={40}/>
+        case "LA Rams":
+            return <NFLIcons.LAR size={40}/>
+        case "Denver":
+            return <NFLIcons.DEN size={40}/>
+        default:
+            return <div/>
+    }
+
+}
+
+const NBALogo = ({team}) => {
     switch (team) {
         case "Atlanta":
             return <NBAIcons.ATL size={40}/>
@@ -157,11 +242,11 @@ const Logo = ({team}) => {
     }
 }
 
-const SortableList = SortableContainer(({items}) => {
+const SortableList = SortableContainer(({items, type}) => {
     return (
         <div>
             {items.map((value, index) => (
-                <SortableItem key={`item-${value}`} index={index} value={value} i={index + 1} />))}
+                <SortableItem key={`item-${value}`} index={index} value={value} i={index + 1} type={type}/>))}
         </div>
     );
 });
