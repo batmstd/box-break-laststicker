@@ -12,4 +12,5 @@ public class BoxBreakAddRequest {
     String name;
     List<String> teams;
     List<String> order;
+    String type;
 }

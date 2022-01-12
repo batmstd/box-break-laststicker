@@ -59,7 +59,7 @@ export const AddDraft = withRouter(({history}) => {
     };
 
     const save = () => {
-        addDraft(name, author, teams, list).then(() => history.push("/draft"))
+        addDraft(name, author, teams, list, league).then(() => history.push("/draft"))
     }
     const steps = [
         {

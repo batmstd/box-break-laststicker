@@ -53,7 +53,7 @@ public class BoxBreakEntity {
     @Column(name = "name")
     List<String> Order;
 
-    public static BoxBreakEntity of(String name, String author, List<String> teams, List<String> order) {
+    public static BoxBreakEntity of(String name, String author, List<String> teams, List<String> order, String type) {
         BoxBreakEntity boxBreakEntity = new BoxBreakEntity();
         boxBreakEntity.setActive(true);
         boxBreakEntity.setAuthor(author);
@@ -61,6 +61,7 @@ public class BoxBreakEntity {
         boxBreakEntity.setTeams(teams);
         boxBreakEntity.setOrder(order);
         boxBreakEntity.setDate(Instant.now());
+        boxBreakEntity.setType(type);
         return boxBreakEntity;
     }
 }

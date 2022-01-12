@@ -1,7 +1,6 @@
 package com.oda.boxbreak.controllers;
 
 import com.oda.boxbreak.dto.ActiveBoxBreaksDto;
-import com.oda.boxbreak.dto.BoxBreakDto;
 import com.oda.boxbreak.dto.BoxBreakExtDto;
 import com.oda.boxbreak.requests.BoxBreakAddRequest;
 import com.oda.boxbreak.interfaces.BoxBreak;
@@ -24,7 +23,7 @@ public class BoxBreakController {
 
     @PostMapping(path = "/add")
     public void add(@RequestBody BoxBreakAddRequest request) {
-        boxBreak.add(request.getAuthor(), request.getName(), request.getTeams(), request.getOrder());
+        boxBreak.add(request.getAuthor(), request.getName(), request.getTeams(), request.getOrder(), request.getType());
     }
 
     @GetMapping(path = "/actives")

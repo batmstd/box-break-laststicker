@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface BoxBreak {
 
-    void add(String author, String name, List<String> teams, List<String> order);
+    void add(String author, String name, List<String> teams, List<String> order, String type);
 
     List<ActiveBoxBreaksDto> getActives();
 

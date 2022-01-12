@@ -25,8 +25,8 @@ public class BoxBreakService implements BoxBreak {
 
     @Override
     @Transactional
-    public void add(String author, String name, List<String> teams, List<String> order) {
-        BoxBreakEntity e = BoxBreakEntity.of(name, author, teams, order);
+    public void add(String author, String name, List<String> teams, List<String> order, String type) {
+        BoxBreakEntity e = BoxBreakEntity.of(name, author, teams, order, type);
         repository.save(e);
     }
 

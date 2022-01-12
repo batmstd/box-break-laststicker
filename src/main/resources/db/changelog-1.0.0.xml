@@ -63,4 +63,10 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="update_null_type_box_break" author="do">
+        <sql>
+            update box_break set type = 'Other' where type is null;
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

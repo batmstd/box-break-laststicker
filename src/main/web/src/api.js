@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const addDraft = (name, author, teams, order) => {
-    return axios.post('/v1/box-breaks/add', {name, author, teams, order})
+export const addDraft = (name, author, teams, order, type) => {
+    return axios.post('/v1/box-breaks/add', {name, author, teams, order, type})
 }
 
 export const activeDrafts = () => {
