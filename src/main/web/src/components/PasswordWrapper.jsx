@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 export const PasswordWrapper = ({children}) => {
     const [isValid, setValid] = React.useState(false);
     const [password, setPassword] = React.useState("");
-    const code = '123';
+    const code = 'qwe123';
 
     const handleChange = ({target: {value}}) => {
         setPassword(value)
