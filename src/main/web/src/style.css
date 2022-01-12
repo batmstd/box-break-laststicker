@@ -26,6 +26,11 @@
     /*justify-content: center;*/
 }
 
+.center {
+    display: grid;
+    justify-content: center;
+}
+
 .main {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

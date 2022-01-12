@@ -5,6 +5,7 @@ import {UserInfo} from "./UserInfo";
 import Button from "@mui/material/Button";
 import Stack from '@mui/material/Stack';
 import {useHistory} from "react-router";
+import {PasswordWrapper} from "./PasswordWrapper";
 
 export const DraftInfo = ({match: {params: {id}}}) => {
     const [draftInfo, setDraftInfo] = React.useState({order: [], usersWithTeams: [], teams: []});
@@ -53,34 +54,39 @@ export const DraftInfo = ({match: {params: {id}}}) => {
 
     const handleDeactivate = () => deactivate(draftInfo.id).then(() => alert("Брейк завершен"));
 
-    return (<div>
+    return (<PasswordWrapper>
         <div>
-            <div>Автор: {draftInfo.author}</div>
-            <div>Название: {draftInfo.name}</div>
-            <Stack spacing={2} direction="row">
-                <Button variant={"contained"} onClick={handleDeactivate}>Завершить</Button>
-                <Button variant={"outlined"} onClick={() => history.push("/draft/")}>Назад</Button>
-            </Stack>
-        </div>
-        <hr/>
-        <div className={'main'}>
-            <OrderedList list={draftInfo.order} selectedIndex={selectedIndex}/>
-            <div className={"insert-draft"}>
-                <label>Приоритет команд:</label>
-                <div className={"users"}>
-                    {draftInfo.usersWithTeams.map((user, i) => (
-                        <UserInfo key={i} name={user.name} teams={user.teams} callback={enterTeamsCallback} allTeams={draftInfo.teams}/>
-                    ))}
-                </div>
+            <div>
+                <div>Автор: {draftInfo.author}</div>
+                <div>Название: {draftInfo.name}</div>
+                <Stack spacing={2} direction="row">
+                    <Button variant={"contained"} onClick={handleDeactivate}>Завершить</Button>
+                    <Button variant={"outlined"} onClick={() => history.push("/draft/")}>Назад</Button>
+                </Stack>
             </div>
-            <div className={"insert-draft"}>
-                <label>Выбранные команды:</label>
+            <hr/>
+            <div className={'main'}>
                 <div>
-                    {resultList.map((result, i) => (
-                        <div key={i}>{i + 1}. <b>{result.team}</b> - {result.user}</div>
-                    ))}
+                    <label>Очередь драфта:</label>
+                    <OrderedList list={draftInfo.order} selectedIndex={selectedIndex}/>
+                </div>
+                <div className={"insert-draft"}>
+                    <label>Приоритет команд:</label>
+                    <div className={"users"}>
+                        {draftInfo.usersWithTeams.map((user, i) => (
+                            <UserInfo key={i} name={user.name} teams={user.teams} callback={enterTeamsCallback} allTeams={draftInfo.teams}/>
+                        ))}
+                    </div>
+                </div>
+                <div className={"insert-draft"}>
+                    <label>Выбранные команды:</label>
+                    <div>
+                        {resultList.map((result, i) => (
+                            <div key={i}>{i + 1}. <b>{result.team}</b> - {result.user}</div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>)
+    </PasswordWrapper>)
 }
