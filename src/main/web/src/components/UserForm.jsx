@@ -27,11 +27,13 @@ export const UserForm = () => {
 
     const handleChangeName = ({target: {value}}) => setName(value);
 
+    const goBreakInfo = () => history.push("/info/" + selectedBreak.id);
+
     const save = () => {
         if (name === '-') {
             return alert("выберите ваш ник")
         }
-        addUserToDraft(name, selectedBreak.id, selectedBreak.teams).then(() => window.location.reload())
+        addUserToDraft(name, selectedBreak.id, selectedBreak.teams).then(goBreakInfo)
     }
 
     const onSortEnd = ({oldIndex, newIndex}) => {
@@ -41,8 +43,7 @@ export const UserForm = () => {
     return (<div className={'drafts'}>
         {selectedBreak && (<div>
             <div>
-                <Button onClick={() => history.push("/info/" + selectedBreak.id)}>Посмотреть текущее состояние
-                    драфта</Button>
+                <Button onClick={goBreakInfo}>Посмотреть текущее состояние драфта</Button>
             </div>
             <div>
                 <Button variant={"contained"} onClick={save}>Сохранить</Button>
