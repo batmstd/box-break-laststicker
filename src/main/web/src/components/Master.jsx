@@ -18,10 +18,36 @@ import StorageIcon from '@mui/icons-material/Storage';
 import {
     useHistory,
 } from "react-router-dom";
+import {CODE, useLocalStorage, useTicker, VALID_CODE} from "../Hooks";
 
 export const Master = () => {
     const history = useHistory();
     const [open, setOpen] = React.useState(false);
+    const [isAuth, setAuth] = React.useState(false);
+
+    const isChange = () => {
+        let isValid = get(VALID_CODE);
+        setAuth(isValid != null && isValid === 'true');
+    }
+
+    useTicker(isChange, 1000);
+
+    const {get, remove} = useLocalStorage();
+
+    React.useEffect(() => {
+        let isValid = get(VALID_CODE);
+        if (isValid === null) {
+            return setAuth(false);
+        }
+        setAuth(isValid === "true");
+    }, [get]);
+
+    const logout = () => {
+        remove(CODE);
+        remove(VALID_CODE);
+        history.push("/");
+    }
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const go = (path) => () => history.push(path);
@@ -65,7 +91,11 @@ export const Master = () => {
                 <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                     laststicker drafts
                 </Typography>
-                <Button color="inherit">Login</Button>
+                {!isAuth ? (
+                    <Button color="inherit" onClick={go("/login")}>Login</Button>
+                ) : (
+                    <Button color="inherit" onClick={logout}>Logout</Button>
+                )}
             </Toolbar>
         </AppBar>
         <Drawer

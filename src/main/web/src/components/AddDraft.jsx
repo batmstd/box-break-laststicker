@@ -1,7 +1,7 @@
 import React from 'react';
 import {InsertDraft} from "./InsertDraft";
 import {InsertTeams} from "./InsertTeams";
-import {useHistory, withRouter} from "react-router";
+import {withRouter} from "react-router";
 import {addDraft} from "../api";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -64,11 +64,13 @@ export const AddDraft = withRouter(({history}) => {
     const steps = [
         {
             label: "Выбор организатора",
-            body: <TextField id="outlined-basic" label="Автор" variant="outlined" value={author} onChange={handleChangeAuthor}/>
+            body: <TextField id="outlined-basic" label="Автор" variant="outlined" value={author}
+                             onChange={handleChangeAuthor}/>
         },
         {
             label: "Название",
-            body: <TextField id="outlined-basic" label="Название" variant="outlined" value={name} onChange={handleChangeName}/>
+            body: <TextField id="outlined-basic" label="Название" variant="outlined" value={name}
+                             onChange={handleChangeName}/>
         },
         {
             label: "Участники",
@@ -76,7 +78,7 @@ export const AddDraft = withRouter(({history}) => {
         },
         {
             label: "Выбор лиги",
-            body:  <TextField
+            body: <TextField
                 id="select-league"
                 select
                 label="Выбор лиги"

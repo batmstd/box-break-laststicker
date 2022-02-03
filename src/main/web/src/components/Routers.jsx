@@ -6,6 +6,7 @@ import {UserForm, ViewUserBreaks} from "./UserForm";
 import {DraftInfo} from "./DraftInfo";
 import {DraftOrderInfo} from "./DraftOrderInfo";
 import {PasswordWrapper} from "./PasswordWrapper";
+import {Login} from "./Login";
 
 export const Routers = () => {
     return (
@@ -16,6 +17,7 @@ export const Routers = () => {
             <Route path={"/draft/view/:id"} component={UserForm}/>
             <Route path={"/draft/:id"} component={DraftInfo}/>
             <Route path={"/draft"} component={Drafts}/>
+            <Route path={"/login"} component={Login}/>
         </Switch>
     )
 }

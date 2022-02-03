@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {activeDrafts} from "../api";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -11,9 +11,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
-import SportsFootballIcon from '@mui/icons-material/SportsFootball';
-import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 
 export const Drafts = () => {
     const history = useHistory();
@@ -31,26 +28,11 @@ export const Drafts = () => {
     )
 }
 
-const Icon = ({type}) => {
-    switch (type) {
-        case 'NBA':
-            return <SportsBasketballIcon/>
-        case 'NFL':
-            return <SportsFootballIcon/>
-        case 'APL':
-        case 'La liga':
-            return <SportsSoccerIcon/>
-        case 'Other':
-        default:
-            return <div/>
-    }
-}
-
 export const Breaks = ({group, url}) => {
     const history = useHistory();
-    return <Card sx={{ maxWidth: 650, marginBottom: 2 }}>
+    return <Card sx={{maxWidth: 650, marginBottom: 2}}>
         <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
                 {group.type}
             </Typography>
             <TableContainer>
