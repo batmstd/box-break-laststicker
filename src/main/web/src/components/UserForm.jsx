@@ -13,6 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
+import {shuffle} from "../Shuffle";
 
 export const UserForm = () => {
     const [selectedBreak, selectBreak] = React.useState(undefined);
@@ -39,6 +40,10 @@ export const UserForm = () => {
     const onSortEnd = ({oldIndex, newIndex}) => {
         selectBreak(b => ({...b, teams: arrayMove(b.teams, oldIndex, newIndex)}))
     };
+
+    const handleShuffle = () => {
+        selectBreak(b => ({...b, teams: shuffle(b.teams)}));
+    }
 
     return (<div className={'drafts'}>
         {selectedBreak && (<div>
@@ -68,6 +73,10 @@ export const UserForm = () => {
             </div>
             <br/>
             <label>Выберите команды по приоритету</label>
+            <div>
+                <Button variant={'outlined'} onClick={handleShuffle}>Перемешать</Button>
+            </div>
+            <br/>
             <SortableList items={selectedBreak.teams} type={selectedBreak.type} onSortEnd={onSortEnd}/>
         </div>)}
     </div>)
