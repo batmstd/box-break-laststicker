@@ -23,7 +23,7 @@ export const InsertTeams = ({callback, league}) => {
     React.useEffect(() => {
         const list = getCommandsByLeague(league).split("\n")
         callback(list);
-    }, [callback, league]);
+    }, []);
 
     React.useEffect(() => {
         setValue(getCommandsByLeague(league))
