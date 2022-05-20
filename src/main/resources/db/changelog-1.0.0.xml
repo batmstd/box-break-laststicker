@@ -69,4 +69,10 @@
         </sql>
     </changeSet>
 
+    <changeSet id="delete_empty_team" author="do">
+        <sql>
+            delete from user_box_break_teams where team = '';
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
