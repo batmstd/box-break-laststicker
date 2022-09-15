@@ -107,6 +107,8 @@ const Logo = ({team, type}) => {
             return <NBALogo team={team}/>
         case 'NFL':
             return <NFLLogo team={team}/>
+        case 'APL':
+            return <APLLogo team={team}/>
         default:
             return <div/>
     }
@@ -141,7 +143,6 @@ const NFLLogo = ({team}) => {
         case "LA Chargers":
             return <NFLIcons.LAC size={40}/>
         case "Arizona":
-            console.log('arizona')
             return <NFLIcons.ARI size={40}/>
         case "Cincinnati":
             return <NFLIcons.CIN size={40}/>
@@ -249,6 +250,54 @@ const NBALogo = ({team}) => {
             return <NBAIcons.WAS size={40}/>
         default:
             return <div/>
+    }
+}
+
+const APLLogo = ({team}) => {
+    switch (team) {
+        case "Arsenal London":
+            return <div className={"arsenal logo"}/>
+        case "Aston Villa":
+            return <div className={"aston logo"}/>
+        case "Brentford":
+            return <div className={"brentford logo"}/>
+        case "Brighton & Hove Albion":
+            return <div className={"brighton logo"}/>
+        case "Burnley":
+            return <div className={"burnley logo"}/>
+        case "Chelsea":
+            return <div className={"chelsea logo"}/>
+        case "Crystal Palace":
+            return <div className={"crystal logo"}/>
+        case "Everton":
+            return <div className={"everton logo"}/>
+        case "Leeds United":
+            return <div className={"leeds logo"}/>
+        case "Leicester City":
+            return <div className={"leicester logo"}/>
+        case "Liverpool":
+            return <div className={"liverpool logo"}/>
+        case "Manchester City":
+            return <div className={"mcity logo"}/>
+        case "Manchester United":
+            return <div className={"united logo"}/>
+        case "Newcastle United":
+            return <div className={"newcastle logo"}/>
+        case "Norwich City":
+            return <div className={"norwich logo"}/>
+        case "Southampton":
+            return <div className={"southampton logo"}/>
+        case "Tottenham Hotspur":
+            return <div className={"tottenham logo"}/>
+        case "Watford":
+            return <div className={"watford logo"}/>
+        case "West Ham United":
+            return <div className={"westham logo"}/>
+        case "Wolverhampton Wanderers":
+            return <div className={"wolverhampton logo"}/>
+        default:
+            return <div/>
+
     }
 }
 

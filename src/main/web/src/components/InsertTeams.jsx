@@ -7,7 +7,7 @@ const getCommandsByLeague = (league) => {
         case "NBA":
             return 'Atlanta\nBoston\nBrooklyn\nCharlotte\nChicago\nCleveland\nDallas\nDenver\nDetroit\nGolden State\nHouston\nIndiana\nLA Clippers\nLA Lakers\nMemphis\nMiami\nMilwaukee\nMinnesota\nNew Orleans\nNew York\nOklahoma City\nOrlando\nPhiladelphia\nPhoenix\nPortland\nSacramento\nSan Antonio\nToronto\nUtah\nWashington';
         case 'APL':
-            return 'Arsenal\nLondon\nAston Villa\nBrentford\nBrighton & Hove Albion\nBurnley\nChelsea\nCrystal Palace\nEverton\nLeeds United\nLeicester City\nLiverpool\nManchester City\nManchester United\nNewcastle United\nNorwich City\nSouthampton\nTottenham Hotspur\nWatford\nWest Ham United\nWolverhampton Wanderers';
+            return 'Arsenal London\nAston Villa\nBrentford\nBrighton & Hove Albion\nBurnley\nChelsea\nCrystal Palace\nEverton\nLeeds United\nLeicester City\nLiverpool\nManchester City\nManchester United\nNewcastle United\nNorwich City\nSouthampton\nTottenham Hotspur\nWatford\nWest Ham United\nWolverhampton Wanderers';
         case 'La Liga':
             return 'Alavés\nAthletic Bilbao\nAtlético Madrid\nBarcelona\nCádiz\nCelta\nElche\nEspanyol\nGetafe\nGranada\nLevante\nMallorca\nOsasuna\nRayo Vallecano\nReal Betis\nReal Madrid\nReal Sociedad\nSevilla\nValencia\nVillarreal';
         case 'NFL':

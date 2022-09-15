@@ -67,3 +67,123 @@
         grid-template-columns: minmax(150px, 1fr);
     }
 }
+
+.logo {
+    height: 25px;
+    width: 25px;
+}
+
+.mcity {
+    background: url("logos/apl/mcity.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.afc {
+    background: url("logos/apl/afc_bournemouth_2013-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.arsenal {
+    background: url("logos/apl/Arsenal_2002-Pres-1.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.aston {
+    background: url("logos/apl/aston_villa_fc_2016-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.brentford {
+    background: url("logos/apl/brentford_fc_2017-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.brighton {
+    background: url("logos/apl/brighton_hove_albion_fc_2011-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.burnley {
+    background: url("logos/apl/Burnley_F.C._Logo.svg") repeat 0 0;
+    background-size: 100%;
+}
+
+.chelsea {
+    background: url("logos/apl/chelsea-fc_2006-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.crystal {
+    background: url("logos/apl/crystal_palace_fc_2013-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.everton {
+    background: url("logos/apl/everton_fc_2014-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.fullham {
+    background: url("logos/apl/fulham_fc_2001-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.leeds {
+    background: url("logos/apl/leeds_united_FC._2002-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.leicester {
+    background: url("logos/apl/leicester_city_fc_2010-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.liverpool {
+    background: url("logos/apl/liverpool_fc_1999-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.united {
+    background: url("logos/apl/manchester_united_fc_1998-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.newcastle {
+    background: url("logos/apl/newcastle_united_fc_1988-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.forest {
+    background: url("logos/apl/nottingham_forest_fc_2010-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.southampton {
+    background: url("logos/apl/southampton_fc_1973-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.tottenham {
+    background: url("logos/apl/tottenham_hotspur_fc_2006-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.westham {
+    background: url("logos/apl/west_ham_united-fc_2016-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.wolverhampton {
+    background: url("logos/apl/wolverhampton_wanderers_2002-pres.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.norwich {
+    background: url("logos/apl/Norwich_City_FC_logo.svg.png") repeat 0 0;
+    background-size: 100%;
+}
+
+.watford {
+    background: url("logos/apl/png-clipart-watford-f-c-premier-league-leicester-city-f-c-english-football-league-premier-league-antler-text-thumbnail.png") repeat 0 0;
+    background-size: 100%;
+}
