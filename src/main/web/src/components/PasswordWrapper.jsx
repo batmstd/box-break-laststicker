@@ -6,7 +6,7 @@ export const PasswordWrapper = ({children}) => {
     const {get, set} = useLocalStorage();
     const [isValid, setValid] = React.useState(false);
     const [password, setPassword] = React.useState("");
-    const code = 'qwe123';
+    const code = 'gffdge4g4--@@!';
 
     React.useEffect(() => {
         const codeFromLocalStorage = get(CODE);
